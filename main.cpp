@@ -162,6 +162,7 @@ static int safe_open(const char* filename, int flags)
 
 static void read_key(uint8_t key[34], const char* filename)
 	{
+	printf("Start to read the key\n");
 	int fd = safe_open(filename, O_RDONLY);
 	int numread = 0;
 
@@ -220,6 +221,7 @@ static bool file_exists(const char* filename)
 
 static void init_key(uint8_t key[34], const string& key_file)
 	{
+	printf("Start init the key\n");
 	if ( key_file.empty() )
 		read_key(key, "/dev/random");
 	else
@@ -277,6 +279,7 @@ static void reverse_port(const string& port, const uint8_t key[34],
 
 int main(int argc, char** argv)
 	{
+	printf("Start the program\n");
 	string input_pcap_name, output_pcap_name, key_file, addr_map_file,
 	       port_map_file, addr_to_convert, port_to_convert;
 	bool addr_anon = true, port_anon = true, reverse = false;
@@ -285,6 +288,7 @@ int main(int argc, char** argv)
 
 	for ( ; ; )
 		{
+		printf("get op\n");
 		int o = getopt_long(argc, argv, opt_string, long_options, 0);
 
 		if ( o == -1 )
@@ -329,9 +333,10 @@ int main(int argc, char** argv)
 			return 1;
 		}
 		}
-
+	printf("finished get the op\n");
 	uint8_t key[34];
 	init_key(key, key_file);
+	printf("Get the key!\n");
 
 	if ( ! addr_to_convert.empty() )
 		{
